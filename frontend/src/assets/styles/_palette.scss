@@ -1,13 +1,13 @@
   $customized-red: (A800: #a50a28,
-    contrast: (A800: #a50a28
+    contrast: (A800: $light-primary-text,
     ));
 
   $customized-white: (A800: rgb(255, 255, 255),
-    contrast: (A800: rgb(255, 255, 255),
+    contrast: (A800: $dark-primary-text,
     ));
 
-  $customized-green: (A800: #1CC8A0,
-    contrast: (A800: #1CC8A0,
+  $customized-cyan: (A800: #1CC8A0,
+    contrast: (A800: $light-primary-text,
     ))
 
 

@@ -1,9 +1,12 @@
-import { FilmesService } from 'src/app/core/filmes.service';
-import { Filme } from 'src/app/shared/models/filme';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+
+import { Filme } from 'src/app/shared/models/filme';
+import { Alerta } from 'src/app/shared/models/alerta';
+import { FilmesService } from 'src/app/core/filmes.service';
+import { AlertaComponent } from './../../shared/components/alerta/alerta.component';
 import { ValidarCamposService } from 'src/app/shared/components/campos/validar-campos.service';
 
 @Component({
@@ -17,14 +20,14 @@ export class CadastroFilmesComponent implements OnInit {
   generos: Array<string>;
 
   constructor(
-    private fb: FormBuilder,
     public validacao: ValidarCamposService,
     public filmesService: FilmesService,
     public dialog: MatDialog,
+    private fb: FormBuilder,
     private router: Router) { }
 
   get f() {
-    return this.cadastro.controls; 
+    return this.cadastro.controls;
   }
 
   ngOnInit(): void {
@@ -43,16 +46,13 @@ export class CadastroFilmesComponent implements OnInit {
 
   }
 
-
-
-
   submit(): void {
     this.cadastro.markAllAsTouched();  // Faz parecer que todos os campos foram clicados
     if (this.cadastro.invalid) {
       return;
     }
 
-    const filme = this.cadastro.getRawValue()as Filme;  // retorna os campos que existem dentro do formGroup cadastro
+    const filme = this.cadastro.getRawValue() as Filme;  // retorna os campos que existem dentro do formGroup cadastro
     this.salvar(filme);
 
   }
@@ -61,15 +61,38 @@ export class CadastroFilmesComponent implements OnInit {
     this.cadastro.reset();
   }
 
-  private salvar(filme: Filme) : void {
-    this.filmesService.salvar(filme).subscribe(() =>{
-      alert('sucesso')
-    }),
-    () => {
-      alert('Erroao salvar');
-    }
-    
+  private salvar(filme: Filme): void {
+    this.filmesService.salvar(filme).subscribe(() => { // Primeira parte do subscrive é o sucesso
+      const config = {
+        data: {
+          btnSucesso: 'Ir para a listagem',
+          btnCancelar: 'Cadastrar um novo filme',
+          corBtnCancelar: 'primary',
+          possuirBtnFechar: true
+        } as Alerta
+      };
+      const dialogRef = this.dialog.open(AlertaComponent, config);
+      dialogRef.afterClosed().subscribe((opcao: boolean) => {
+        if (opcao) { // Verifica qual opção foi clicada no formulario: lisar ou cadastrar filme
+          this.router.navigateByUrl('filmes');  //navega para lista de filmes
+        } else {
+          this.reiniciarForm();
+        }
+      });
+    },
+      () => {  // Segunda parte do subscrive é o error
+        const config = {
+          data: {
+            titulo: 'Erro ao salvar o registro!',
+            descricao: 'Não conseguimos salvar seu registro, favor tentar novamente mais tarde',
+            corBtnSucesso: 'warn',
+            btnSucesso: 'Fechar'
+          } as Alerta
+        };
+        this.dialog.open(AlertaComponent, config);
+      }
+      // Terceira parte seria o finally - poderia ter uma configuração para ser exibida independente de dar sucesso ou error.
+      );
   }
-
 
 }

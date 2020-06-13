@@ -12,12 +12,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './shared/material/material.module';
 import { RodapeComponent } from './shared/components/rodape/rodape.component';
 import { TopoComponent } from './shared/components/topo/topo.component';
+import { AlertaComponent } from './shared/components/alerta/alerta.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TopoComponent,
     RodapeComponent,
+    AlertaComponent
   ],
   imports: [
     BrowserModule,
@@ -28,6 +30,7 @@ import { TopoComponent } from './shared/components/topo/topo.component';
     LayoutModule,
     FilmesModule // Quando ele importa um módulo e fica sabendo que dentro dele conterá todos os imports de filmes
   ],
+  entryComponents:[AlertaComponent], // É inicializado ao carregar a aplicação
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'pt'}],
   bootstrap: [AppComponent]
 })
