@@ -17,13 +17,8 @@
   </form>
 </mat-card>
 
-
-
   <div class="home-content"
       infiniteScroll
-      [infiniteScrollDistance]="5"
-      [infiniteScrollThrottle]="50"
-      [scrollWindow]="true"
       (scrolled)="onScroll()"
       *ngIf="filmes.length; else semRegistro"> <!-- Se não existirem filmes chame o template semRegistro -->
     <mat-card class="home-card" *ngFor="let filme of filmes">
