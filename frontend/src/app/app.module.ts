@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { MaterialModule } from './shared/material/material.module';
 import { RodapeComponent } from './shared/components/rodape/rodape.component';
@@ -28,7 +29,8 @@ import { AlertaComponent } from './shared/components/alerta/alerta.component';
     HttpClientModule,
     MaterialModule,
     LayoutModule,
-    FilmesModule // Quando ele importa um módulo e fica sabendo que dentro dele conterá todos os imports de filmes
+    // InfiniteScrollModule,
+    FilmesModule // Quando se importa um módulo o Angular fica sabendo que dentro dele conterá todos os imports de filmes
   ],
   entryComponents:[AlertaComponent], // É inicializado ao carregar a aplicação
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'pt'}],
