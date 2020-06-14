@@ -23,11 +23,32 @@ export class VisualizarFilmesComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params['id'];
+    console.log('visualizar')
     this.visualizar();
   }
 
   editar(): void {
+    console.log('editar-visualizar', this.id)
     this.router.navigateByUrl('/filmes/cadastro/' + this.id);
+  }
+
+  excluir(): void {
+    const config = {
+      data: {
+        titulo: 'Você tem certeza que deseja excluir?',
+        descricao: 'Caso você tenha certceza que deseja excluir, clique no botão OK',
+        corBtnCancelar: 'primary',
+        corBtnSucesso: 'accent',
+        possuirBtnFechar: true
+      } as Alerta
+    };
+    const dialogRef = this.dialog.open(AlertaComponent, config);
+    dialogRef.afterClosed().subscribe((opcao: boolean) => {
+      if (opcao) {
+        this.filmesService.excluir(this.id)
+          .subscribe(() => this.router.navigateByUrl('/filmes'));
+      }
+    });
   }
 
   private visualizar(): void {

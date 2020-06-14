@@ -29,7 +29,6 @@ import { AlertaComponent } from './shared/components/alerta/alerta.component';
     HttpClientModule,
     MaterialModule,
     LayoutModule,
-    // InfiniteScrollModule,
     FilmesModule // Quando se importa um módulo o Angular fica sabendo que dentro dele conterá todos os imports de filmes
   ],
   entryComponents:[AlertaComponent], // É inicializado ao carregar a aplicação
